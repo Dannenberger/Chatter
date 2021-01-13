@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Chatter</string>
+    <string name="button_import">Import</string>
+    <string name="text_chatter">Chatter</string>
+    <string name="text_description">Import your contacts to begin (>")></string>
+    <string name="text_contact_list">Contact List</string>
 </resources>
