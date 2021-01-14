@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HomeFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home_constraint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:id="@+id/layout_import"
+            style="@style/cell_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:id="@+id/text_import_contacts"
+                style="@style/text_cell"
+                android:text="@string/text_import_contacts" />
+            <Button
+                android:id="@+id/button_import"
+                style="@style/button_primary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_import"
+                app:iconTint="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_frequency"
+            style="@style/cell_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/layout_import"
+            app:layout_constraintTop_toBottomOf="@+id/layout_import">
+            <TextView
+                android:id="@+id/text_message_frequency"
+                style="@style/text_cell"
+                android:text="@string/text_message_frequency" />
+            <Button
+                android:id="@+id/button_frequency"
+                style="@style/button_primary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_1_week" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_manage"
+            style="@style/cell_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/layout_frequency"
+            app:layout_constraintTop_toBottomOf="@+id/layout_frequency">
+
+            <TextView
+                android:id="@+id/text_message_manage"
+                style="@style/text_cell"
+                android:text="@string/text_manage_contacts" />
+
+            <Button
+                android:id="@+id/button_manage"
+                style="@style/button_primary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button_manage" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
