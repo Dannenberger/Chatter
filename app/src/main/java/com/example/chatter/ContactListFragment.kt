@@ -2,60 +2,29 @@ package com.example.chatter
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.chatter.dummy.DummyContent
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import com.example.chatter.database.ContactDatabase
+import com.example.chatter.databinding.FragmentContactListBinding
 
 /**
  * A fragment representing a list of Items.
  */
 class ContactListFragment : Fragment() {
 
-    private var columnCount = 1
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val binding: FragmentContactListBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_contact_list, container, false)
+        val application = requireNotNull(this.activity).application
+        val dataSource = ContactDatabase.getInstance(application).contactDatabaseDao
+        val viewModelFactory = ContactListViewModelFactory(dataSource, application)
+        val contactListViewModel = ViewModelProvider(this, viewModelFactory).get(ContactListViewModel::class.java)
+        binding.contactListViewModel = contactListViewModel
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_contact_list, container, false)
-
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = MyItemRecyclerViewAdapter(DummyContent.ITEMS)
-            }
-        }
-        return view
-    }
-
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            ContactListFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
-    }
 }
