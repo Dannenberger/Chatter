@@ -4,6 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".HomeFragment">
 
+    <data>
+        <variable
+            name="contactListViewModel"
+            type="com.example.chatter.ContactListViewModel" />
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/home_constraint"

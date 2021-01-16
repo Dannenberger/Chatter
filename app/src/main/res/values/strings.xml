@@ -19,4 +19,5 @@
         3. Get a push notification and send your text! <br/>
     </string>
     <string name="text_about">About</string>
+    <string name="text_all_contacts">All Contacts:</string>
 </resources>
