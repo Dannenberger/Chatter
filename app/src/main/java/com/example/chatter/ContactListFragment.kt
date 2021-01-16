@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.chatter.database.ContactDatabase
 import com.example.chatter.databinding.FragmentContactListBinding
@@ -16,7 +15,9 @@ import com.example.chatter.databinding.FragmentContactListBinding
  */
 class ContactListFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+
         val binding: FragmentContactListBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_contact_list, container, false)
         val application = requireNotNull(this.activity).application
@@ -24,14 +25,20 @@ class ContactListFragment : Fragment() {
         val viewModelFactory = ContactListViewModelFactory(dataSource, application)
         val contactListViewModel = ViewModelProvider(this, viewModelFactory).get(ContactListViewModel::class.java)
 
+//        val recyclerView = R.id.contact_list
+//        recyclerView.layout
+
+        binding.contactListViewModel = contactListViewModel
+        binding.lifecycleOwner = this
+
         val adapter = ContactListAdapter()
         binding.contactList.adapter = adapter
-//        contactListViewModel.contacts.observe(viewLifecycleOwner, Observer {
-//            it?.let {
-//                adapter.data = it
-//            }
-//        })
-        binding.lifecycleOwner = this
+
+        contactListViewModel.contacts.observe(viewLifecycleOwner, {
+            it?.let {
+                adapter.data = it
+            }
+        })
         return binding.root
     }
 

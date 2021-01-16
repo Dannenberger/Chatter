@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.example.chatter.database.Contact
 import com.example.chatter.database.ContactDatabase
@@ -14,6 +15,8 @@ import kotlinx.coroutines.*
 class ContactListViewModel(
     val database: ContactsDao,
     application: Application) : AndroidViewModel(application) {
+
+    val contacts = database.getAllContacts()
 
     private var viewModelJob = Job()
     private val context = getApplication<Application>().applicationContext

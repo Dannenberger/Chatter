@@ -1,12 +1,14 @@
 package com.example.chatter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatter.database.Contact
 
-class ContactListAdapter: RecyclerView.Adapter<TextItemViewHolder>() {
+class ContactListAdapter: RecyclerView.Adapter<ContactListAdapter.ViewHolder>() {
 
     var data = listOf<Contact>()
         set(value) {
@@ -16,15 +18,22 @@ class ContactListAdapter: RecyclerView.Adapter<TextItemViewHolder>() {
 
     override fun getItemCount() = data.size
 
-    override fun onBindViewHolder(holder: TextItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.textView.text = item.firstName.toString()
+        val res = holder.itemView.context.resources
+        holder.name.text = item.firstName.toString()
+        holder.phoneNumber.text = item.phoneNumber.toString()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TextItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.contact, parent, false) as TextView
-        return TextItemViewHolder(view)
+        val view = layoutInflater.inflate(R.layout.list_item_contact, parent, false)
+        return ViewHolder(view)
     }
 
-}/**/
+    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+        val name: TextView = itemView.findViewById(R.id.contact_name)
+        val phoneNumber: TextView = itemView.findViewById(R.id.contact_phone_number)
+    }
+
+}
