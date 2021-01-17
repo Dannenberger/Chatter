@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 /**
  * Creates the Room database that holds all the contact information
  */
-@Database(entities = [Contact::class], version = 4, exportSchema = false)
+@Database(entities = [Contact::class], version = 7, exportSchema = false)
 abstract class ContactDatabase: RoomDatabase() {
 
     abstract val contactsDao: ContactsDao

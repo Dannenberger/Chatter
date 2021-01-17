@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         val navController = this.findNavController(R.id.myNavHostFragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
 
-        // Deals with sending notification to user
+        // Sending notification to user
         val task = PeriodicWorkRequest.Builder(
             NotificationWorker::class.java,
             7, TimeUnit.DAYS,
