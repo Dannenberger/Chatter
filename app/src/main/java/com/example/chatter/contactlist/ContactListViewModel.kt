@@ -41,7 +41,7 @@ class ContactListViewModel(
                         null)
                     if (phoneCursor != null) {
                         while (phoneCursor.moveToNext()) {
-                            phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER))
+                            phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
                             var type = phoneCursor.getInt(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE))
                             if (type == ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE) {
                                 break
@@ -69,7 +69,11 @@ class ContactListViewModel(
 //    }
 
     private fun checkForValidNumber(phoneNumber: String): Boolean {
-        if (phoneNumber.startsWith("+1800")) return false
+        if (phoneNumber.startsWith("+1800")    ||
+            phoneNumber.startsWith("+1 (800)") ||
+            phoneNumber.startsWith("1 (800)")  ||
+            phoneNumber.startsWith("1(800)")
+        ) return false
         return phoneNumber.length >= 10
     }
 
