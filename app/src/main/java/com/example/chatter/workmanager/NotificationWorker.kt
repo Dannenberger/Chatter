@@ -15,6 +15,9 @@ import androidx.work.WorkerParameters
 import com.example.chatter.*
 import com.example.chatter.database.ContactDatabase
 
+/**
+ * Class responsible for sending notifications to the users device.
+ */
 class NotificationWorker(appContext: Context, workerParams: WorkerParameters): Worker(appContext, workerParams) {
 
     private val CHANNEL_ID = "channel_id"

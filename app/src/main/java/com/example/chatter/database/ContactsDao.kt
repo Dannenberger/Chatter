@@ -3,6 +3,10 @@ package com.example.chatter.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
+/**
+ * The data access object for the Room database. Responsible for adding, removing,
+ * and performing other manipulations to the database.
+ */
 @Dao
 interface ContactsDao {
 

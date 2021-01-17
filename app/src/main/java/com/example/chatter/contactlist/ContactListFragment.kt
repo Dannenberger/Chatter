@@ -12,7 +12,7 @@ import com.example.chatter.database.ContactDatabase
 import com.example.chatter.databinding.FragmentContactListBinding
 
 /**
- * A fragment representing a list of Items.
+ * Creates the view for the manage contacts screen.
  */
 class ContactListFragment : Fragment() {
 

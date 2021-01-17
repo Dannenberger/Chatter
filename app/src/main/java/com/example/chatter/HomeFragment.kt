@@ -17,9 +17,7 @@ import com.example.chatter.database.ContactDatabase
 import com.example.chatter.databinding.FragmentHomeBinding
 
 /**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Creates the view for the home screen.
  */
 class HomeFragment : Fragment() {
 

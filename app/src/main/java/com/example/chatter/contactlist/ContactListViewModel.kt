@@ -18,6 +18,9 @@ class ContactListViewModel(
     private val context = getApplication<Application>().applicationContext
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
+    /**
+     * Reads the users contact list on their device, and adds them to the Room database
+     */
     private suspend fun importContacts() {
         val contentResolver = context?.contentResolver
         val cursor: Cursor? = contentResolver?.query(
