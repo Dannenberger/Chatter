@@ -1,10 +1,11 @@
-package com.example.chatter
+package com.example.chatter.contactlist
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chatter.R
 import com.example.chatter.database.Contact
 
 class ContactListAdapter: RecyclerView.Adapter<ContactListAdapter.ViewHolder>() {

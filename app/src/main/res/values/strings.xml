@@ -7,17 +7,13 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_import_contacts">Import Contacts</string>
     <string name="text_message_frequency">Message Frequency</string>
-    <string name="button_1_week">1 Week</string>
+    <string name="button_1_week">2 Days</string>
     <string name="text_manage_contacts">Manage Contacts</string>
     <string name="button_manage">Manage</string>
-    <string name="text_about_description">
-        Chatter lets you do import your contacts and get automated reminders to send them messages :)<br/>
-        <br/>
-        Steps: <br/>
-        1. Import your contacts <br/>
-        2. Set the frequency for reminders <br/>
-        3. Get a push notification and send your text! <br/>
+    <string name="text_about_description">Chatter lets you do import your contacts and get automated reminders to send them messages.
+        Import your contacts to start receiving notifications to reach out to your friends.<br/>
     </string>
     <string name="text_about">About</string>
     <string name="text_all_contacts">All Contacts:</string>
+    <string name="kirby">(>\")></string>
 </resources>

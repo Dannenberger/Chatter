@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/contactListFragment"
-        android:name="com.example.chatter.ContactListFragment"
+        android:name="com.example.chatter.contactlist.ContactListFragment"
         android:label="@string/text_contact_list"
         tools:layout="@layout/fragment_contact_list" />
 </navigation>

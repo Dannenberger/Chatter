@@ -1,10 +1,6 @@
 package com.example.chatter
 
-import android.content.ContentResolver
-import android.content.Context
-import android.database.Cursor
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
@@ -15,12 +11,10 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.example.chatter.database.Contact
+import com.example.chatter.contactlist.ContactListViewModel
+import com.example.chatter.contactlist.ContactListViewModelFactory
 import com.example.chatter.database.ContactDatabase
 import com.example.chatter.databinding.FragmentHomeBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 /**
  * A simple [Fragment] subclass.
@@ -39,7 +33,8 @@ class HomeFragment : Fragment() {
             val application = requireNotNull(this.activity).application
             val dataSource = ContactDatabase.getInstance(application).contactsDao
             val viewModelFactory = ContactListViewModelFactory(dataSource, application)
-            val contactListViewModel = ViewModelProvider(this, viewModelFactory).get(ContactListViewModel::class.java)
+            val contactListViewModel = ViewModelProvider(this, viewModelFactory).get(
+                ContactListViewModel::class.java)
             contactListViewModel.onStartImport()
             Toast.makeText(context,"Contacts imported :)", Toast.LENGTH_SHORT).show()
         }

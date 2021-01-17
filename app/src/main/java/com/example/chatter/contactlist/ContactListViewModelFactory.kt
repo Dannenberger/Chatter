@@ -1,4 +1,4 @@
-package com.example.chatter
+package com.example.chatter.contactlist
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

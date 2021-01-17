@@ -1,4 +1,4 @@
-package com.example.chatter
+package com.example.chatter.contactlist
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.chatter.R
 import com.example.chatter.database.ContactDatabase
 import com.example.chatter.databinding.FragmentContactListBinding
 
@@ -23,7 +24,8 @@ class ContactListFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val dataSource = ContactDatabase.getInstance(application).contactsDao
         val viewModelFactory = ContactListViewModelFactory(dataSource, application)
-        val contactListViewModel = ViewModelProvider(this, viewModelFactory).get(ContactListViewModel::class.java)
+        val contactListViewModel = ViewModelProvider(this, viewModelFactory).get(
+            ContactListViewModel::class.java)
 
         binding.contactListViewModel = contactListViewModel
         binding.lifecycleOwner = this
