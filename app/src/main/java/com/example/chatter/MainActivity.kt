@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         val task = PeriodicWorkRequest.Builder(
             NotificationWorker::class.java,
             20, TimeUnit.MINUTES,
-            7, TimeUnit.MINUTES
+            10, TimeUnit.MINUTES
         ).build()
         val workManager = WorkManager.getInstance(this)
         workManager.enqueue(task)

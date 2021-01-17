@@ -1,14 +1,10 @@
 package com.example.chatter
 
 import android.app.Application
-import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
 import com.example.chatter.database.Contact
-import com.example.chatter.database.ContactDatabase
 import com.example.chatter.database.ContactsDao
 import kotlinx.coroutines.*
 
@@ -25,7 +21,7 @@ class ContactListViewModel(
     private suspend fun importContacts() {
         val contentResolver = context?.contentResolver
         val cursor: Cursor? = contentResolver?.query(
-            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            ContactsContract.Contacts.CONTENT_URI,
             null,
             null,
             null,
@@ -33,22 +29,48 @@ class ContactListViewModel(
         )
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                if (cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.HAS_PHONE_NUMBER)) > 0) {
-                    val phoneNumber: String = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-//                    if (!checkForValidNumber(phoneNumber)) continue
-                    val id: Long = cursor.getLong(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID))
-                    val firstName: String = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
-                    val lastName: String = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                if (cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
+                    var id: Long = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID))
+                    var name: String = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                    var phoneNumber = ""
+                    val phoneCursor: Cursor? = contentResolver.query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
+                        null,
+                        null)
+                    if (phoneCursor != null) {
+                        while (phoneCursor.moveToNext()) {
+                            phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER))
+                            var type = phoneCursor.getInt(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE))
+                            if (type == ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE) {
+                                break
+                            }
+                        }
+                    }
+                    if (!checkForValidNumber(phoneNumber)) {
+                        continue
+                    }
                     val contact = Contact(
                         id = id,
-                        firstName = firstName,
-                        lastName = lastName,
+                        name = name,
                         phoneNumber = phoneNumber,
                     )
                     insert(contact)
                 }
             }
         }
+    }
+
+//    /**
+//     * TODO: Returns a list of all phone numbers associated with a contact, and their type
+//     */
+//    private fun getPhoneNumbers(phoneCursor: Cursor?): String {
+//    }
+
+    private fun checkForValidNumber(phoneNumber: String): Boolean {
+        if (phoneNumber.startsWith("+1800")) return false
+        return phoneNumber.length >= 10
     }
 
     fun onStartImport() {

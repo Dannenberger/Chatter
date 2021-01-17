@@ -42,7 +42,7 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters): W
             channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
             }
-            val notificationManager: NotificationManager? = getSystemService(context!!, NotificationManager::class.java)
+            val notificationManager: NotificationManager? = getSystemService(context, NotificationManager::class.java)
             notificationManager!!.createNotificationChannel(channel)
         }
     }
@@ -51,16 +51,12 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters): W
      * Handles sending the actual notification to the device
      */
     private fun sendNotification() {
-
-        if (channel == null) {
-            createNotificationChannel()
-        }
         val randomContact = ContactDatabase.getInstance(applicationContext).contactsDao.getRandomContact()
-        val builder = NotificationCompat.Builder(context!!, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("Chatter here!")
-            .setContentText("Say hi to " + randomContact.firstName + " today")
-        with(NotificationManagerCompat.from(context!!)) {
+            .setContentText("Say hi to " + randomContact.name + " today")
+        with(NotificationManagerCompat.from(context)) {
             notify(notificationId, builder.build())
         }
     }
@@ -71,7 +67,7 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters): W
     private fun composeSmsMessage() {
         val smsIntent = Intent(Intent.ACTION_VIEW)
         smsIntent.addCategory(Intent.CATEGORY_APP_MESSAGING)
-        startActivity(context!!, smsIntent, bundleOf())
+        startActivity(context, smsIntent, bundleOf())
     }
 
 }

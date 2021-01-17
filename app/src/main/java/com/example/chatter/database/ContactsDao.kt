@@ -18,7 +18,7 @@ interface ContactsDao {
     @Query("SELECT * from contact_list WHERE id = :key")
     fun getContactById(key: Long): Contact?
 
-    @Query("SELECT * from contact_list ORDER BY last_name DESC")
+    @Query("SELECT * from contact_list ORDER BY name DESC")
     fun getAllContacts(): LiveData<List<Contact>>
 
     @Query("SELECT * from contact_list ORDER BY RANDOM() LIMIT 1")
