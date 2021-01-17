@@ -21,6 +21,9 @@ interface ContactsDao {
     @Query("SELECT * from contact_list ORDER BY last_name DESC")
     fun getAllContacts(): LiveData<List<Contact>>
 
+    @Query("SELECT * from contact_list ORDER BY RANDOM() LIMIT 1")
+    fun getRandomContact(): Contact
+
     @Query("DELETE FROM contact_list")
     fun clearContacts()
 

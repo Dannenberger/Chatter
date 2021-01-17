@@ -1,16 +1,30 @@
 package com.example.chatter
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
+import android.graphics.BitmapFactory
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.work.*
 import com.example.chatter.database.Contact
 import com.example.chatter.database.ContactDatabase
 import com.example.chatter.databinding.ActivityMainBinding
+import com.example.chatter.workmanager.NotificationWorker
+import java.sql.Time
+import java.time.Duration
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +35,21 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val navController = this.findNavController(R.id.myNavHostFragment)
         NavigationUI.setupActionBarWithNavController(this, navController)
+
+        // Deals with sending notification to user
+        val task = PeriodicWorkRequest.Builder(
+            NotificationWorker::class.java,
+            20, TimeUnit.MINUTES,
+            7, TimeUnit.MINUTES
+        ).build()
+        val workManager = WorkManager.getInstance(this)
+        workManager.enqueue(task)
+
+//        // This is for testing one-off notifications
+//        val task = OneTimeWorkRequest.Builder(NotificationWorker::class.java).build()
+//        val workManager = WorkManager.getInstance(this)
+//        workManager.enqueue(task)
+
     }
 
     /**
@@ -31,49 +60,7 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp()
     }
 
-    /**
-     * Imports contacts from a user's contact list on their device
-     */
-//    fun importContacts() {
-//        val context: Context? = baseContext
-//        val db = context?.let { ContactDatabase.getInstance(it) }
-//        val contentResolver = contentResolver
-//        val cursor: Cursor? = contentResolver.query(
-//            ContactsContract.Contacts.CONTENT_URI,
-//            null,
-//            null,
-//            null,
-//            null
-//        )
-//        while (cursor != null && cursor.moveToNext()) {
-//            if (cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
-//                val phoneNumber: String = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-//                if (!checkForValidNumber(phoneNumber)) continue
-//                val id: Long = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID))
-//                val firstName: String = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME))
-//                val lastName: String = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME))
-//                val contact = Contact(
-//                    id = id,
-//                    firstName = firstName,
-//                    lastName = lastName,
-//                    phoneNumber = phoneNumber,
-//                )
-//                if (db != null) {
-//                    db.contactsDao.insertContact(contact)
-//                }
-//            }
-//        }
-//    }
 
-    /**
-     * Checks to make sure a number received should be imported to the list of contacts in the app.
-     */
-    private fun checkForValidNumber(phoneNumber: String): Boolean {
-        if (phoneNumber.length < 10 || phoneNumber.startsWith("1800")) {
-            return false
-        }
-        return true
-    }
 
 
 }

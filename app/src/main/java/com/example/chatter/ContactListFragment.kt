@@ -25,9 +25,6 @@ class ContactListFragment : Fragment() {
         val viewModelFactory = ContactListViewModelFactory(dataSource, application)
         val contactListViewModel = ViewModelProvider(this, viewModelFactory).get(ContactListViewModel::class.java)
 
-//        val recyclerView = R.id.contact_list
-//        recyclerView.layout
-
         binding.contactListViewModel = contactListViewModel
         binding.lifecycleOwner = this
 
